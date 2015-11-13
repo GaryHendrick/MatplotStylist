@@ -1,28 +1,8 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="ChangeListManager">
-    <list default="true" id="12ff96f2-7e0d-4a7f-9691-44c0505570ff" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$USER_HOME$/PycharmProjects/MatplotStylist/.idea/workspace.xml" />
-      <change type="NEW" beforePath="" afterPath="$USER_HOME$/PycharmProjects/MatplotStylist/com/garyhendrick/matplotstylist/__init__.py" />
-      <change type="DELETED" beforePath="$USER_HOME$/PycharmProjects/MatplotStylist/.idea/PlotInspector.iml" afterPath="" />
-      <change type="DELETED" beforePath="$USER_HOME$/PycharmProjects/MatplotStylist/org/oyrm/inspector/__init__.py" afterPath="" />
-      <change type="DELETED" beforePath="$USER_HOME$/PycharmProjects/MatplotStylist/org/oyrm/plotinspector/__init__.py" afterPath="" />
-      <change type="DELETED" beforePath="$USER_HOME$/PycharmProjects/MatplotStylist/org/oyrm/plotinspector/embedded_plot.py" afterPath="" />
-      <change type="MOVED" beforePath="$USER_HOME$/PycharmProjects/MatplotStylist/org/oyrm/inspector/res/icon_collapse.png" afterPath="$USER_HOME$/PycharmProjects/MatplotStylist/com/garyhendrick/matplotstylist/res/icon_collapse.png" />
-      <change type="MOVED" beforePath="$USER_HOME$/PycharmProjects/MatplotStylist/org/oyrm/inspector/res/icon_collapse.svg" afterPath="$USER_HOME$/PycharmProjects/MatplotStylist/com/garyhendrick/matplotstylist/res/icon_collapse.svg" />
-      <change type="MOVED" beforePath="$USER_HOME$/PycharmProjects/MatplotStylist/org/oyrm/inspector/res/icon_expand.png" afterPath="$USER_HOME$/PycharmProjects/MatplotStylist/com/garyhendrick/matplotstylist/res/icon_expand.png" />
-      <change type="MOVED" beforePath="$USER_HOME$/PycharmProjects/MatplotStylist/org/oyrm/inspector/res/icon_expand.svg" afterPath="$USER_HOME$/PycharmProjects/MatplotStylist/com/garyhendrick/matplotstylist/res/icon_expand.svg" />
-      <change type="MOVED" beforePath="$USER_HOME$/PycharmProjects/MatplotStylist/org/oyrm/inspector/res/icon_fields.png" afterPath="$USER_HOME$/PycharmProjects/MatplotStylist/com/garyhendrick/matplotstylist/res/icon_fields.png" />
-      <change type="MOVED" beforePath="$USER_HOME$/PycharmProjects/MatplotStylist/org/oyrm/inspector/res/icon_fields.svg" afterPath="$USER_HOME$/PycharmProjects/MatplotStylist/com/garyhendrick/matplotstylist/res/icon_fields.svg" />
-      <change type="MOVED" beforePath="$USER_HOME$/PycharmProjects/MatplotStylist/org/oyrm/inspector/res/icon_inheritance.png" afterPath="$USER_HOME$/PycharmProjects/MatplotStylist/com/garyhendrick/matplotstylist/res/icon_inheritance.png" />
-      <change type="MOVED" beforePath="$USER_HOME$/PycharmProjects/MatplotStylist/org/oyrm/inspector/res/icon_sort.png" afterPath="$USER_HOME$/PycharmProjects/MatplotStylist/com/garyhendrick/matplotstylist/res/icon_sort.png" />
-      <change type="MOVED" beforePath="$USER_HOME$/PycharmProjects/MatplotStylist/org/oyrm/inspector/res/inheritance_icon.svg" afterPath="$USER_HOME$/PycharmProjects/MatplotStylist/com/garyhendrick/matplotstylist/res/inheritance_icon.svg" />
-      <change type="MOVED" beforePath="$USER_HOME$/PycharmProjects/MatplotStylist/org/oyrm/inspector/res/sort_icon.svg" afterPath="$USER_HOME$/PycharmProjects/MatplotStylist/com/garyhendrick/matplotstylist/res/sort_icon.svg" />
-      <change type="MODIFICATION" beforePath="$USER_HOME$/PycharmProjects/MatplotStylist/.idea/modules.xml" afterPath="$USER_HOME$/PycharmProjects/MatplotStylist/.idea/modules.xml" />
-      <change type="MODIFICATION" beforePath="$USER_HOME$/PycharmProjects/MatplotStylist/.idea/vcs.xml" afterPath="$USER_HOME$/PycharmProjects/MatplotStylist/.idea/vcs.xml" />
-      <change type="MOVED" beforePath="$USER_HOME$/PycharmProjects/MatplotStylist/org/__init__.py" afterPath="$USER_HOME$/PycharmProjects/MatplotStylist/com/__init__.py" />
-      <change type="MOVED" beforePath="$USER_HOME$/PycharmProjects/MatplotStylist/org/oyrm/__init__.py" afterPath="$USER_HOME$/PycharmProjects/MatplotStylist/com/garyhendrick/__init__.py" />
-      <change type="MOVED" beforePath="$USER_HOME$/PycharmProjects/MatplotStylist/org/oyrm/inspector/inspector.py" afterPath="$USER_HOME$/PycharmProjects/MatplotStylist/com/garyhendrick/matplotstylist/stylist.py" />
+    <list default="true" id="12ff96f2-7e0d-4a7f-9691-44c0505570ff" name="Default" comment="Committed naming convention changes">
+      <change type="MODIFICATION" beforePath="$USER_HOME$/PycharmProjects/MatplotStylist/.idea/workspace.xml" afterPath="$USER_HOME$/PycharmProjects/MatplotStylist/.idea/workspace.xml" />
     </list>
     <ignored path="PlotInspector.iws" />
     <ignored path=".idea/workspace.xml" />
@@ -171,7 +151,7 @@
     <ConfirmationsSetting value="0" id="Remove" />
   </component>
   <component name="ProjectView">
-    <navigator currentView="ProjectPane" proportions="" version="1">
+    <navigator currentView="Scope" currentSubView="Project Files" proportions="" version="1">
       <flattenPackages />
       <showMembers />
       <showModules />
@@ -202,49 +182,36 @@
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
+        </subPane>
+      </pane>
+      <pane id="Scope">
+        <subPane subId="Project Files">
           <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="PlotInspector" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
             </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="MatplotStylist" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            <PATH_ELEMENT USER_OBJECT="MatplotStylist">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
             </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="com" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="garyhendrick" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            <PATH_ELEMENT USER_OBJECT="com">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
             </PATH_ELEMENT>
           </PATH>
           <PATH>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="PlotInspector" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            <PATH_ELEMENT USER_OBJECT="Root">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
             </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="MatplotStylist" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="com" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="garyhendrick" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
-            </PATH_ELEMENT>
-            <PATH_ELEMENT>
-              <option name="myItemId" value="matplotstylist" />
-              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            <PATH_ELEMENT USER_OBJECT="MatplotStylist">
+              <option name="myItemId" value="" />
+              <option name="myItemType" value="" />
             </PATH_ELEMENT>
           </PATH>
         </subPane>
       </pane>
-      <pane id="Scope" />
     </panes>
   </component>
   <component name="PropertiesComponent">
@@ -463,7 +430,13 @@
       <option name="project" value="LOCAL" />
       <updated>1447426234564</updated>
     </task>
-    <option name="localTasksCounter" value="2" />
+    <task id="LOCAL-00002" summary="Committed naming convention changes">
+      <created>1447428884539</created>
+      <option name="number" value="00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1447428884539</updated>
+    </task>
+    <option name="localTasksCounter" value="3" />
     <servers />
   </component>
   <component name="TodoView">
@@ -479,7 +452,7 @@
     <frame x="-8" y="-8" width="1936" height="1096" extended-state="6" />
     <editor active="false" />
     <layout>
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.13072917" sideWeight="0.47667342" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="true" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.13072917" sideWeight="0.47261664" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3286004" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3296146" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.46835443" sideWeight="0.24944568" order="8" side_tool="true" content_ui="tabs" />
@@ -488,7 +461,7 @@
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.3296146" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.253125" sideWeight="0.4837728" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.2614108" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.13072917" sideWeight="0.5233266" order="1" side_tool="true" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" show_stripe_button="true" weight="0.13072917" sideWeight="0.5273834" order="1" side_tool="true" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.32911393" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.25" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" show_stripe_button="true" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
@@ -517,7 +490,8 @@
   <component name="VcsManagerConfiguration">
     <option name="CHECK_NEW_TODO" value="false" />
     <MESSAGE value="Initial Commit. Tkinter interaction with basic Matplotlib plot" />
-    <option name="LAST_COMMIT_MESSAGE" value="Initial Commit. Tkinter interaction with basic Matplotlib plot" />
+    <MESSAGE value="Committed naming convention changes" />
+    <option name="LAST_COMMIT_MESSAGE" value="Committed naming convention changes" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
