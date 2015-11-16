@@ -8,3 +8,7 @@ __author__ = 'gary'
 #TODO add license information to the source
 #TODO configurre __author__ etc... to be presentable
 #TODO connect github issue tracker
+#TODO set up validation where necessary http://stupidpythonideas.blogspot.com/2013/12/tkinter-validation.html
+#TODO alter logging structure to take advantage of the runconfiguration logs region
+#TODO set up the stylist frame to provide a reasonable initial tkinterconfiguration, size, etc..
+
