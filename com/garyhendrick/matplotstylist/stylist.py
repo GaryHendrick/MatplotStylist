@@ -1,31 +1,32 @@
 __author__ = 'gary'
 import logging
+
 logging.basicConfig(level=logging.DEBUG, format="%(levelname)s:\t%(message)s")
 
 import matplotlib
+
 matplotlib.use("TkAgg")
 
-import ttk
-
-import numpy as np
 from numpy import arange, sin, pi
-
 from matplotlib import pyplot as plt
 from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg, NavigationToolbar2TkAgg
 # implement the default mpl key bindings
-from matplotlib.backend_bases import key_press_handler
 from matplotlib.figure import Figure
-
+from matplotlib.artist import getp
 import sys, os
+
 if sys.version_info[0] < 3:
     import Tkinter as tk
 else:
     import tkinter as tk
+import tkColorChooser
+import ttk
 
 themes = ('winnative', 'clam', 'alt', 'default', 'classic', 'vista', 'xpnative')
 
 # app is being maintained in the global scope in order to maintain a reference
 app = None
+
 
 class StylistTkinter(ttk.Frame):
     _WINDOW_TITLE = "Generic Title"
@@ -37,6 +38,7 @@ class StylistTkinter(ttk.Frame):
     1. Create the plot required to build this up
     2. Create all of the appropriate widgets
     """
+
     def styleChange(self, name1, name2, op):
         """
         :param name1: http://www.tcl.tk/man/tcl8.4/TclCmd/trace.htm#M14
@@ -45,18 +47,20 @@ class StylistTkinter(ttk.Frame):
         """
         logging.debug("styleChange detected with arguments (%s, %s, %s)" % (name1, name2, op))
         logging.debug("styleChange executing a change from to %s", self.mpl_global_style.get())
-        plt.style.use(self.mpl_global_style.get()) # TODO can you set this up to use name1 ? Yes, tk.StringVar() contains _name
+        plt.style.use(
+            self.mpl_global_style.get())  # TODO can you set this up to use name1 ? Yes, tk.StringVar() contains _name
 
-        #clean up the existing stuff, deleting all of the components within the canvas
+        # clean up the existing stuff, deleting all of the components within the canvas
         self.canvas.get_tk_widget().delete("all")
         for child in self.mplframe.winfo_children():
             child.destroy()
         self.figure.clear()
         self.axes.clear()
-        del self.line,self.axes, self.figure
+        del self.line, self.axes, self.figure
 
         # recretae the plot, the frame it resides in is already created and useful
         self.createPlot()
+        logging.debug("styleChange completed with new style changed to %s" % self.mpl_global_style.get())
 
     def loadOptions(self):
         logging.debug("loadOptions invocation")
@@ -87,7 +91,6 @@ class StylistTkinter(ttk.Frame):
         self.toolbar = NavigationToolbar2TkAgg(self.canvas, self.mplframe)
         self.toolbar.update()
         self.canvas.get_tk_widget().pack(side=tk.TOP, fill=tk.BOTH, expand=1)
-
 
     def scaleFigAlpha(self, value):
         logging.debug("scaleFigAlpha called with alpha = %s" % value)
@@ -129,11 +132,11 @@ class StylistTkinter(ttk.Frame):
         These same properties may be identified using "artists"
         """
         self.styletab_figure = FigureParametrics(self.artist_notebook, self.figure)
-        self.styletab_axes = AxesParametrics(self.artist_notebook, self.figure)
-        self.styletab_primitives = PrimitiveParametrics(self.artist_notebook,self.figure)
+        self.styletab_axes = AxesParametrics(self.artist_notebook, self.axes)
+        self.styletab_primitives = PrimitiveParametrics(self.artist_notebook, self.figure)
         self.artist_notebook.add(self.styletab_figure, sticky=tk.N + tk.E + tk.S + tk.W, text="Figure")
         self.artist_notebook.add(self.styletab_axes, sticky=tk.N + tk.E + tk.S + tk.W, text="Axes")
-        self.artist_notebook.add(self.styletab_primitives, sticky=tk.N + tk.E + tk.S + tk.W, text="Lines")
+        self.artist_notebook.add(self.styletab_primitives, sticky=tk.N + tk.E + tk.S + tk.W, text="Primitives")
 
         # Lay it out
         self.artist_notebook.pack(side=tk.TOP, fill=tk.BOTH, expand=1)
@@ -144,14 +147,11 @@ class StylistTkinter(ttk.Frame):
         self.master.wm_iconbitmap()
         self.pack()
 
-
     def bindWidgetVariables(self):
         self.mpl_global_style.trace("w", self.styleChange)
 
-
     def bindWidgetEvents(self):
         pass
-
 
     def __init__(self, master=None):
         ttk.Frame.__init__(self, master, class_='matplotstylist')
@@ -160,14 +160,13 @@ class StylistTkinter(ttk.Frame):
         self.applyOptions()
         StylistTheme.configure()
 
-        self.x =arange(0.0, pi, 0.01)
-        self.y = sin(2*pi*self.x)
+        self.x = arange(0.0, pi, 0.01)
+        self.y = sin(2 * pi * self.x)
 
         self.createWidgets()
         self.bindWidgetVariables()
         self.bindWidgetEvents()
         # TODO: can we change any master level features such as title and author for this frame
-
 
     @staticmethod
     def launch(style=None):
@@ -176,13 +175,14 @@ class StylistTkinter(ttk.Frame):
         ttk.Style().theme_use(style)
         app = StylistTkinter()
         app.mainloop()
-        try :
+        try:
             app.destroy()
         except tk.TclError as terr:
             if not terr.message == 'can\'t invoke "destroy" command:  application has been destroyed':
                 logging.error(repr(terr))
             else:
                 logging.debug(terr.message)
+
 
 class FigureParametrics(ttk.Frame):
     """ Figure Parametrics contains the controls required to stylize the Figure and links
@@ -198,11 +198,12 @@ class FigureParametrics(ttk.Frame):
     subplotpars=None,  # default to rc
     tight_layout=None,  # default to rc figure.autolayout
     """
+
     def createWidgets(self):
         """ create an internal set of widgets with labels to represent the artists involved in the
         figure itself.  The figure's axes may be linked, as well as its patch
         """
-        #column 1
+        # column 1
         self.lbl_figsize = ttk.Label(self, text="figsize")
         self.lbl_dpi = ttk.Label(self, text="dpi")
         self.lbl_facecolor = ttk.Label(self, text="facecolor")
@@ -211,9 +212,9 @@ class FigureParametrics(ttk.Frame):
         self.lbl_frameon = ttk.Label(self, text="frameon")
         self.lbl_subplotpars = ttk.Label(self, text="subplotpars")
         self.lbl_tight_layout = ttk.Label(self, text="tight_layout")
-        self.sep_parentchild    = ttk.Separator(self, orient=tk.HORIZONTAL)
+        self.sep_parentchild = ttk.Separator(self, orient=tk.HORIZONTAL)
 
-        #column 2
+        # column 2
         self.ent_figsize = ttk.Entry(self)
         self.ent_dpi = ttk.Entry(self)
         self.ent_facecolor = ttk.Entry(self)
@@ -223,7 +224,7 @@ class FigureParametrics(ttk.Frame):
         self.ent_subplotpars = ttk.Entry(self)
         self.ent_tight_layout = ttk.Entry(self)
 
-        #layout
+        # layout
         self.lbl_figsize.grid(column=0, row=0)
         self.lbl_dpi.grid(column=0, row=1)
         self.lbl_facecolor.grid(column=0, row=2)
@@ -233,7 +234,7 @@ class FigureParametrics(ttk.Frame):
         self.lbl_subplotpars.grid(column=0, row=6)
         self.lbl_tight_layout.grid(column=0, row=7)
         self.sep_parentchild.grid(column=0, row=8, columnspan=2, sticky=tk.E + tk.W)
-        
+
         self.ent_figsize.grid(column=1, row=0)
         self.ent_dpi.grid(column=1, row=1)
         self.ent_facecolor.grid(column=1, row=2)
@@ -259,34 +260,253 @@ class FigureParametrics(ttk.Frame):
         self.createWidgets()
         self.bindWidgetEvents()
 
+
 class AxesParametrics(ttk.Frame):
-    def __init__(self, parent, axes):
+    """ from _AxesBase.__init__
+    ================   =========================================
+    Keyword            Description
+    ================   =========================================
+    *adjustable*       [ 'box' | 'datalim' | 'box-forced']
+    *alpha*            float: the alpha transparency (can be None)
+    *anchor*           [ 'C', 'SW', 'S', 'SE', 'E', 'NE', 'N',
+                       'NW', 'W' ]
+    *aspect*           [ 'auto' | 'equal' | aspect_ratio ]
+    *autoscale_on*     [ *True* | *False* ] whether or not to
+                     autoscale the *viewlim*
+    *axis_bgcolor*     any matplotlib color, see
+                     :func:`~matplotlib.pyplot.colors`
+    *axisbelow*        draw the grids and ticks below the other
+                     artists
+    *cursor_props*     a (*float*, *color*) tuple
+    *figure*           a :class:`~matplotlib.figure.Figure`
+                     instance
+    *frame_on*         a boolean - draw the axes frame
+    *label*            the axes label
+    *navigate*         [ *True* | *False* ]
+    *navigate_mode*    [ 'PAN' | 'ZOOM' | None ] the navigation
+                     toolbar button status
+    *position*         [left, bottom, width, height] in
+                     class:`~matplotlib.figure.Figure` coords
+    *sharex*           an class:`~matplotlib.axes.Axes` instance
+                     to share the x-axis with
+    *sharey*           an class:`~matplotlib.axes.Axes` instance
+                     to share the y-axis with
+    *title*            the title string
+    *visible*          [ *True* | *False* ] whether the axes is
+                     visible
+    *xlabel*           the xlabel
+    *xlim*             (*xmin*, *xmax*) view limits
+    *xscale*           [%(scale)s]
+    *xticklabels*      sequence of strings
+    *xticks*           sequence of floats
+    *ylabel*           the ylabel strings
+    *ylim*             (*ymin*, *ymax*) view limits
+    *yscale*           [%(scale)s]
+    *yticklabels*      sequence of strings
+    *yticks*           sequence of floats
+    ================   =========================================
+    """
+    props = {}
+    mAxes = None
+
+    def ask_color_axis_bgcolor(self, *args, **kwargs):
+        logging.debug("clicked axis_bgcolor button")
+        result = tkColorChooser.askcolor(parent=self.master, initialcolor=None, title="axis_bgclor")
+        ttk.Style().configure('axis_bgcolor.TButton', background=result[1])
+        logging.debug("setting axis_bgcolor to chose color %s" % (repr(result)))
+        plt.colors()
+        self.mAxes.set_axis_bgcolor(result[1])
+
+    def createWidgets(self):
+        s = ttk.Style()
+
+        self.lbl_adjustable = ttk.Label(self, text="adjustable")
+        values = ('box', 'datalim', 'box-forced')
+        self.props['adjustable'] = tk.StringVar()
+        self.omu_adjustable = ttk.OptionMenu(self, self.props['adjustable'], values[0], *(values))
+        del values
+        self.lbl_adjustable.grid(column=0, row=0)
+        self.omu_adjustable.grid(column=1, row=0)
+
+        self.lbl_alpha = ttk.Label(self, text="alpha")
+        self.props['alpha'] = tk.DoubleVar()
+        self.scl_alpha = ttk.Scale(self, variable=self.props['alpha'], from_=0.0, to=1.0, orient=tk.HORIZONTAL)
+        self.lbl_alpha.grid(column=0, row=1)
+        self.scl_alpha.grid(column=1, row=1)
+
+        self.lbl_anchor = ttk.Label(self, text="anchor")
+        values = ('C', 'SW', 'S', 'SE', 'E', 'NE', 'N', 'NW', 'W')
+        self.props['anchor'] = tk.StringVar()
+        self.omu_anchor = ttk.OptionMenu(self, self.props['anchor'], values[0], *(values))
+        del values
+        self.lbl_anchor.grid(column=0, row=2)
+        self.omu_anchor.grid(column=1, row=2)
+
+        self.lbl_aspect = ttk.Label(self, text="aspect")
+        values = ('auto', 'equal', 'aspect_ratio')
+        self.props['aspect'] = tk.StringVar()
+        self.omu_aspect = ttk.OptionMenu(self, self.props['aspect'], values[0], *(values))
+        del values
+        self.lbl_aspect.grid(column=0, row=3)
+        self.omu_aspect.grid(column=1, row=3)
+
+        self.lbl_autoscale_on = ttk.Label(self, text="autoscale_on")
+        self.props['autoscale_on'] = tk.IntVar()
+        self.chk_autoscale_on = ttk.Checkbutton(self, variable=self.props['autoscale_on'], text="Autoscale viewlim")
+        self.lbl_autoscale_on.grid(column=0, row=4)
+        self.chk_autoscale_on.grid(column=1, row=4)
+
+        self.lbl_axis_bgcolor = ttk.Label(self, text="axis_bgcolor")
+        self.props['axis_bgcolor'] = tk.StringVar()
+        s.configure('axis_bgcolor.TButton', background="black")
+        self.clr_axis_bgcolor = ttk.Button(self, style='axis_bgcolor.TButton', width=42,
+                                           command=self.ask_color_axis_bgcolor)
+        self.lbl_axis_bgcolor.grid(column=0, row=5)
+        self.clr_axis_bgcolor.grid(column=1, row=5)
+
+        self.lbl_axisbelow = ttk.Label(self, text="axisbelow")
+        self.props['axisbelow'] = tk.IntVar()
+        self.chk_axisbelow = ttk.Checkbutton(self, variable=self.props['axisbelow'],
+                                             text="Draw grids and ticks below others")
+        self.lbl_axisbelow.grid(column=0, row=6)
+        self.chk_axisbelow.grid(column=1, row=6)
+        #
+        # cursor_props
+
+        self.lbl_frame_on = ttk.Label(self, text="frame_on")
+        self.props['frame_on'] = tk.IntVar()
+        self.chk_frame_on = ttk.Checkbutton(self, variable=self.props['frame_on'], text="Draw axes frame")
+        self.lbl_frame_on.grid(column=0, row=7)
+        self.chk_frame_on.grid(column=1, row=7)
+
+        self.lbl_label = ttk.Label(self, text="label")
+        self.props['label'] = tk.StringVar()
+        self.ent_label = ttk.Entry(self, textvariable=self.props['label'])
+        self.lbl_label.grid(column=0, row=8)
+        self.ent_label.grid(column=1, row=8)
+
+        self.lbl_navigate = ttk.Label(self, text="navigate")
+        self.props['navigate'] = tk.IntVar()
+        self.chk_navigate = ttk.Checkbutton(self, variable=self.props['navigate'], text="Navigation commands enabled")
+        self.lbl_navigate.grid(column=0, row=9)
+        self.chk_navigate.grid(column=1, row=9)
+
+        self.lbl_navigate_mode = ttk.Label(self, text="navigate_mode")
+        values = ('PAN', 'Zoom', None)
+        self.props['navigate_mode'] = tk.StringVar()
+        self.omu_navigate_mode = ttk.OptionMenu(self, self.props['navigate_mode'], values[0], *(values))
+        del values
+        self.lbl_navigate_mode.grid(column=0, row=10)
+        self.omu_navigate_mode.grid(column=1, row=10)
+
+        # position
+        # todo add controls for left, bottom, width, height
+
+        # sharex
+        # todo add a selection list for the axes with which this may share
+        #
+        # sharey
+        # todo add a selection list for the axes with which this may share
+
+        self.lbl_title = ttk.Label(self, text="title")
+        self.props['title'] = tk.StringVar()
+        self.ent_title = ttk.Entry(self, textvariable=self.props['title'])
+        self.lbl_title.grid(column=0, row=14)
+        self.ent_title.grid(column=1, row=14)
+
+        self.lbl_visible = ttk.Label(self, text="visible")
+        self.props['visible'] = tk.IntVar()
+        self.chk_visible = ttk.Checkbutton(self, variable=self.props['visible'], text="show axes")
+        self.lbl_visible.grid(column=0, row=15)
+        self.chk_visible.grid(column=1, row=15)
+
+        self.lbl_xlabel = ttk.Label(self, text="xlabel")
+        self.props['xlabel'] = tk.StringVar()
+        self.ent_xlabel = ttk.Entry(self, textvariable=self.props['xlabel'])
+        self.lbl_xlabel.grid(column=0, row=16)
+        self.ent_xlabel.grid(column=1, row=16)
+
+        # xlim
+        # todo xlimits, to be set using (xmin, xmax) view limits, requires controls for this tuple
+
+        self.lbl_xscale = ttk.Label(self, text="xscale")
+        self.props['xscale'] = tk.DoubleVar()
+        self.scl_xscale = ttk.Scale(self, variable=self.props['xscale'], from_=0, to=100, orient=tk.HORIZONTAL)
+        self.lbl_xscale.grid(column=0, row=18)
+        self.scl_xscale.grid(column=1, row=18)
+
+        # xticklabels
+        # todo: add a widget to handle a sequence of string
+
+        # xticks
+        # todo: add a widget to handle a sequence of floats
+
+        self.lbl_ylabel = ttk.Label(self, text="ylabel")
+        self.props['ylabel'] = tk.StringVar()
+        self.ent_ylabel = ttk.Entry(self, textvariable=self.props['ylabel'])
+        self.lbl_ylabel.grid(column=0, row=19)
+        self.ent_ylabel.grid(column=1, row=19)
+
+        # ylim
+        # todo ylimits, to be set using (ymin, ymax) view limits, requires controls for this tuple
+
+        self.lbl_yscale = ttk.Label(self, text="yscale")
+        self.props['yscale'] = tk.DoubleVar()
+        self.scl_yscale = ttk.Scale(self, variable=self.props['yscale'], from_=0, to=100, orient=tk.HORIZONTAL)
+        self.lbl_yscale.grid(column=0, row=20)
+        self.scl_yscale.grid(column=1, row=20)
+        #
+        # yticklabels
+        # todo: add a widget to handle a sequence of strings
+
+        # yticks
+        # todo: add a widget to handle a sequence of floats
+
+    def setAxes(self, pAxes):
+        logging.debug("%s.setAxes invoked" % self.__class__)
+        self.mAxes = pAxes
+        for prop in self.props.keys():
+            logging.debug("\tsetting prop %s to value %s" % (prop, repr(getp(self.mAxes, prop))))
+            self.props[prop].set(getp(self.mAxes, prop))
+
+    def __init__(self, parent, axes=None):
         ttk.Frame.__init__(self, parent)
+        self.createWidgets()
+        if not axes is None:
+            self.setAxes(axes)
+
 
 class PrimitiveParametrics(ttk.Frame):
+    """
+    """
+
     def __init__(self, parent, figure):
         ttk.Frame.__init__(self, parent)
+
 
 class ArtistStyleBook(ttk.Notebook):
     """ represents the hierarchy of artists and offers options to edit styles for each
     """
+
     def __init__(self, master):
         ttk.Notebook.__init__(self, master)
+
 
 class StylistTheme(object):
     """ Tkinter theming needs a lot of work
     """
+
     @staticmethod
     def configure():
         logging.debug("StylistTheme.configure() static method invocation")
         s = ttk.Style()
         logging.info(s)
-        s.configure(".", font=('Helvetica', 8)) # root
+        s.configure(".", font=('Helvetica', 8))  # root
         s.configure("mps.TButton", background="blue")
-        s.configure("mps.TCheckbutton",background="blue")
-        s.configure("mps.TCombobox",background="blue")
-        s.configure("mps.TEntry",background="blue")
-        s.configure("mps.TFrame",background="blue")
+        s.configure("mps.TCheckbutton", background="blue")
+        s.configure("mps.TCombobox", background="blue")
+        s.configure("mps.TEntry", background="blue")
+        s.configure("mps.TFrame", background="blue")
         s.configure("mps.TLabel", background="blue")
         s.configure("mps.TLabelFrame", background="blue")
         s.configure("mps.TMenubutton", background="blue")
@@ -304,107 +524,132 @@ class StylistTheme(object):
         s.configure("Treeview", background="blue")
 
 
-class InspectionTree(ttk.Frame):
-    """ An InspectionTree is a compound widget used to depict the structure of a class
+class ColorSelectButton(ttk.Button):
+    """Ttk Button widget displaying the color represented by the StringVar instance associated with this widget
+    and handling the click/choose behavior of the button and its relationship to the tkColorChooser
+
+    The command indicated by the constructor will be executed only after the associated tkColorChooser is used to
+    select the indicated color.
     """
-    _btn_sort, _btn_showinheritance, _btn_showfields,_btn_expand, _btn_collapse = None, None, None, None, None
-    _tre_view = None
-    subject = None
+    """ :type   :   tk.StringVar """
+    _color_var = None
+    """:type    :   str """
+    _chooser_title = None
+    _invocation = None
+    _DEFAULT_COLOR = "#FFFFFF"
+    _STYLE_NAME_TEMPLATE = '%s.ColorSelectButton.TButton'
+    _style_name = None
+    def __init__(self, master=None, *args, **kwargs):
+        """ Construct a ColorSelectButton with parent master
 
-    def do_sort(self):
-        logging.debug("calling do_sort")
+        Standard Options
 
-    def do_showinheritance(self):
-        logging.debug("calling do_showinheritance")
+            class, compound, cursor, image, style, takefocus, text, textvariable, underline, width
 
-    def do_showfields(self):
-        logging.debug("calling do_showfields")
-
-    def do_expand(self):
-        logging.debug("calling do_expand")
-
-    def do_collapse(self):
-        logging.debug("calling do_collapse")
-
-    def createLayout(self):
-        self.columnconfigure(0, minsize=32, pad=2)
-        self.columnconfigure(1, minsize=32, pad=2)
-        self.columnconfigure(2, minsize=32, pad=2)
-        self.columnconfigure(3, minsize=32, pad=2)
-        self.columnconfigure(4, minsize=32, pad=2)
-        self.rowconfigure(0, minsize=32, pad=2)
-        self.rowconfigure(1, minsize=32, pad=2)
-
-        # permitting resizing will require the following sticky
-        self.grid(sticky=tk.N+tk.S+tk.E+tk.W)
-
-    def createWidgets(self):
-        """ Each widget is created here and the name is set in order to maintain appearances, see tkinter.pdf
+        Widget-Specific Option
+            anchor, background, font, foreground, justify, padding, relief, text, wraplength
+            chooser_title  = The name of the color property, to be inserted as the title in the tkColorchooser dialog
+            textvariable    = The StringVar() instance to be populated with the chosen color
         """
-        self._btn_sort = ttk.Button(command=self.do_sort, text="sort", name="buttonSort")
-        self._btn_showinheritance = ttk.Button(command=self.do_showinheritance, text="show inheritance", name="buttonShowInheritance")
-        self._btn_showfields = ttk.Button(command=self.do_showfields, text="show fields", name="buttonShowFields")
-        self._btn_expand= ttk.Button(command=self.do_expand, text="expand", name="buttonExpand")
-        self._btn_collapse = ttk.Button(command=self.do_collapse, text="collapse", name="buttonCollapse")
-        self._tre_view = ttk.Treeview(columns=('Name', 'Value'), name="treeView")
+        self._color_var = kwargs.get('textvariable', tk.StringVar(value=self._DEFAULT_COLOR))
+        if kwargs.get('textvariable') and not kwargs.get('showtext'):
+            del kwargs['textvariable']
 
-        # grid the widgets
-        self._btn_sort.grid(column=0,row=0, rowspan=1)
-        self._btn_showinheritance.grid(column=1, row=0, rowspan=1)
-        self._btn_showfields.grid(column=1, row=0, rowspan=1)
-        self._btn_expand.grid(column=3, row=0, rowspan=1)
-        self._btn_collapse.grid(column=4, row=0, rowspan=1)
-        self._tre_view.grid(column=0, columnspan=5, row=1, sticky=tk.N+tk.E+tk.S+tk.W)
+        if kwargs.get('showtext'):
+            del kwargs['showtext']
 
-    def bindWidgetVariables(self):
-        pass
+        if kwargs.get('color'):
+            self._color_var.set(kwargs.get('color'))
+            del kwargs['color']
 
-    def bindWidgetEvents(self):
-        pass
+        self._chooser_title = kwargs.get('chooser_title', "")
+        if 'chooser_title' in kwargs.keys():
+            del kwargs['chooser_title']
 
-    def buildTree(self):
-        """ build a tree using the subject
-        :param subject: an object which will be inspected to build its tree
-        """
+        cmd = kwargs.get('command') # a temp reference to the command argument, used below to register the function
+        kwargs['command'] = self._choose_color
 
-        for s in self.subject:
-            self._tre_view.insert('', 'end', s, text=s, values=("foo", s))
+        ttk.Button.__init__(self, master, *args, **kwargs)
+        self._style_name = ColorSelectButton._STYLE_NAME_TEMPLATE % (self._name)
+        self.configure(style=self._style_name)
+        # register the passed in command, or generate the necessaries
+        if cmd and not isinstance(cmd, basestring):
+            # callback not registered yet, do it now
+            #fixme use self.register, and also, use the subst function of register rather than this anti-idion
+            self._invocation = self.register(cmd)
+        self._color_var.trace("w", self._trace_color_var)
+        self._stylize()
 
-    def __init__(self, parent=None, subject=None):
-        ttk.Frame.__init__(self, parent, class_='InspectionTree') # the class_ option is recommended by ttk
-        self.subject = subject
-        self.createLayout()
-        self.createWidgets()
-        self.buildTree()
-        self.bindWidgetVariables()
-        self.bindWidgetEvents()
+    def _choose_color(self):
+        result = tkColorChooser.askcolor(parent=self.master, initialcolor=self._color_var.get(),
+                                         title=self._chooser_title)
+        """Invokes the command associated with the button."""
+        if not result[1] is  None:
+            self._color_var.set(result[1])
+        return self.tk.call(self._invocation, "invoke", self)
+
+    def _trace_color_var(self, *args, **kwargs):
+        self._stylize()
+
+    def _stylize(self):
+        s = ttk.Style()
+        s.configure(self._style_name, background=self._color_var.get())
+        s.map(self._style_name,
+              background=[
+                  ('active', self._color_var.get()),
+                  ('background', self._color_var.get()),
+                  ('disabled', self._color_var.get()),
+                  ('focus', self._color_var.get()),
+                  ('invalid', self._color_var.get()),
+                  ('pressed', self._color_var.get()),
+                  ('readonly', self._color_var.get()),
+                  ('selected', self._color_var.get())
+              ],
+              relief=[('pressed', 'groove'),
+                        ('!pressed', 'flat')])
 
     @staticmethod
     def launch(style=None):
-        logging.debug("%s launch invoked with style %s" % (repr(InspectionTree), repr(style)))
+        logging.debug("%s launch invoked with style %s" % (repr(ColorSelectButton), repr(style)))
         global app
         ttk.Style().theme_use(style)
-        root = tk.Tk()
-        root.wm_title("Inspector")
-        root.withdraw()
-        root.protocol("WM_DELETE_WINDOW", root.destroy)
-        subject = np.arange(0.0, 11.0, 0.01)
-        app = InspectionTree(parent=root,subject=subject)
-        app.mainloop()
-        try :
-            app.destroy()
-            root.destroy()
+        global var_color
+        var_color = tk.StringVar(value="#EDE45C")
+        var_color.trace("w", test_write)
+        global colorizer
+        colorizer = ColorSelectButton(command=test_cmd, textvariable=var_color)
+        colorizer.master.wm_title("ColorSelectButton")
+        colorizer.master.wm_minsize(400, colorizer.master.winfo_width())
+        colorizer.pack(side=tk.LEFT, fill=tk.Y, expand=1)
+
+        slave = ColorSelectButton(master=colorizer.master, color='blue')
+        slave.pack(side=tk.TOP, fill=tk.Y, expand=1)
+        colorizer.mainloop()
+        try:
+            colorizer.destroy()
         except tk.TclError as terr:
             if not terr.message == 'can\'t invoke "destroy" command:  application has been destroyed':
                 logging.error(repr(terr))
             else:
                 logging.debug(terr.message)
 
+var_color = None
+colorizer = None
+
+def test_write(*args, **kwargs):
+    logging.debug(("calling external variable trace for the written variable "))
+
+def test_cmd(*args, **kwargs):
+    logging.debug("calling external function for button invocation")
+
+
 def main():
     logging.info("Running main invocation for %s" % __file__)
-    StylistTkinter.launch(style='clam') # ('winnative', 'clam', 'alt', 'default', 'classic', 'vista', 'xpnative')
+    ColorSelectButton.launch(style='clam')  # ('winnative', 'clam', 'alt', 'default', 'classic', 'vista', 'xpnative')
+    # StylistTkinter.launch(style='clam')
     logging.info("Finished main invocation")
     exit()
 
-if __name__== "__main__":
+
+if __name__ == "__main__":
     main()
